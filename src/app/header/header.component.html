@@ -1,0 +1,35 @@
+<header class="container-fluid row" [style.top]="headerTop+'px'" [style.height]="headerH+'px'">
+
+    <div class="group group1">
+
+        <i (click)="abrirCerrarFiltro()" [style.backgroundColor]="bgColor" class="bi bi-list"></i>
+        <div id="logo_container" class="d-flex flex-column justify-content-center">
+            <img src="/assets/PNGs/androslogo.svg">
+        </div>
+    </div>
+    <nav class="group d-flex flex-row">
+        <button (click)="changePage($event)" routerLink="/ruta1" routerLinkActive="active" class="filter_top_button">
+            <i class="d-none d-lg-flex" [getSvg3]="'icons/eventSearch.svg,gray'"></i>ruta 1</button>
+        <button (click)="changePage($event)" routerLink="/ruta2" routerLinkActive="active" class="filter_top_button"><i
+                class="d-none d-lg-flex" [getSvg3]="'icons/eventExtract.svg,#bcbcbc'"></i>
+            ruta2</button>
+        <button routerLink="/ruta3" routerLinkActive="active" class="filter_top_button" disabled><i
+                class="d-none d-lg-flex" [getSvg3]="'icons/subSearch_1.svg,#bcbcbc'"></i> ruta 3</button>
+        <button routerLink="/ruta4" routerLinkActive="active" class="filter_top_button" disabled><i
+                class="d-none d-lg-flex" [getSvg3]="'icons/subExtract.svg,#bcbcbc'"></i> ruta 4</button>
+    </nav>
+    <div class="group group2">
+        <div id="user">
+            <span>Bienvenido: {{user.data.username}}</span>
+            <div [style.backgroundImage]="'url('+user.data.avatar+')'"></div>
+        </div>
+        <div id="logOut" (click)="logOut()" *ngIf="user.state!==false&&currentPath!=='/logIn'" disabled="true">
+            <div [style.backgroundColor]="bgColor"></div>
+            <i class="bi bi-box-arrow-right"></i>
+        </div>
+    </div>
+    <div id="closeTopMenu" (click)="closeTopMenu($event)">
+
+    </div>
+</header>
+<!-- <input class="col-12" type="text" placeholder="buscar"> -->
