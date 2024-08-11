@@ -219,9 +219,10 @@ nav li:hover {
 #closeTopMenu {
     --width: 100px;
     width: var(--width);
-    height: 20px;
+    top: 64px;
     background-image: url(/assets/icons/arrow.svg);
     top: 65px;
+    transform: rotate(-3deg);
     background-position: center;
     background-repeat: no-repeat;
     position: absolute;

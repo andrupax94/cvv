@@ -1,12 +1,11 @@
 <app-header></app-header>
-<main class="container-fluid">
-    <app-filter></app-filter>
+<canvas></canvas>
+<main class="container-fluid" id="white__scuare__cont">
+    <div></div>
+    <div class="background">
+        <canvas id="hero-canvas" width="1920" height="1080"></canvas>
+    </div>
     <router-outlet></router-outlet>
 </main>
 <app-footer></app-footer>
-
 <pop-ups></pop-ups>
-<div id="no_login" *ngIf="user.state===false&&currentPath!=='/logIn'">
-    <h2>{{user.mensaje}}</h2>
-    <button (click)="reload()">Recargar Pagina</button>
-</div>

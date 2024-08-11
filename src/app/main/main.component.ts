@@ -16,7 +16,6 @@ export class MainComponent {
     ) { }
     ngOnInit() {
         this.carga.pause();
-        this.modales.open('disclaimer');
-        this.mensajes.add('ok', 'esta ok');
+        // this.mensajes.add('ok', 'esta ok');
     }
 }
