@@ -1,5 +1,4 @@
 @import '~bootstrap-icons/font/bootstrap-icons.css';
-
 @font-face {
     font-family: 'inter';
     src: url('assets/fonts/Inter/Inter-VariableFont_slntwght.ttf') format('woff');
@@ -48,11 +47,14 @@
 }
 
 :root {
-    --color-primary: red;
-    --color-secondary: rgb(38, 38, 38);
-    --color-terciary: rgb(74, 74, 74);
+    --primary: #005493;
+    --secondary: #4691db;
+    --tertiary: #176ab6;
+    --quaternary: #32465E;
+    --quinary: #000814;
+    --senary: #000;
     --font1: 'inter';
-    --font2: 'protest';
+    --font2: 'forte';
     --logo1: url('assets/PNGs/androslogo.svg');
 }
 
@@ -88,7 +90,6 @@ main {
     0% {
         transform: rotate(0deg);
     }
-
     100% {
         transform: rotate(360deg);
     }
@@ -151,8 +152,8 @@ main {
 .carga>div>div {
     border: 6px solid transparent;
     border-radius: 100%;
-    border-top-color: var(--color-primary);
-    border-bottom-color: var(--color-secondary);
+    border-top-color: var(--primary);
+    border-bottom-color: var(--secondary);
     width: 50px;
     height: 50px;
     animation: loading 1.5s infinite linear;

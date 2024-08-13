@@ -13,7 +13,7 @@ body {
     overflow: hidden;
 }
 
-#white__scuare__cont>div:nth-child(1) {
+#white__scuare__cont>#white__scuare {
     background-color: white;
     width: 100%;
     position: absolute;
@@ -24,6 +24,29 @@ body {
     z-index: 0;
     transform: rotate(8deg);
     box-shadow: -7px 0px 11px 4px white;
+}
+
+#crack {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    background-image: url('/assets/borders/crack.svg');
+    background-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    width: 50%;
+    height: 50%;
+    text-align: right;
+}
+
+#crack>h2 {
+    right: 3vmin;
+    top: 10vmin;
+    position: absolute;
+    color: white;
+    font-family: forte;
+    font-size: 5vmin;
 }
 
 .background {

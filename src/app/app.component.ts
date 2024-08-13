@@ -4,6 +4,8 @@ import { CargaService } from 'src/factory/carga.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { authGuard } from '../guards/auth.guard';
 import { filter } from 'rxjs/operators';
+import { ChangeColorService } from '../factory/change-color.service';
+import { FactoryService } from '../factory/factory.module';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -11,23 +13,26 @@ import { filter } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-    title = 'cvv';
-    public currentPath = '';
-    public user: any;
-    public pageFilter: string = "none";
+
     constructor(
         private auth: authGuard,
         private session: SessionService,
         private carga: CargaService,
         private router: Router,
-
+        private color: ChangeColorService,
+        private andres: FactoryService
     ) {
-
         this.user = { state: false, data: [], mensaje: '' };
         this.carga.to('body');
         this.currentPath = this.router.url;
+
         this.carga.play();
     }
+    title = 'cvv';
+    private canvasStars: HTMLCanvasElement | null = null;
+    public currentPath = '';
+    public user: any;
+    public pageFilter: string = "none";
     reload() {
         this.auth.reload();
     }
@@ -46,28 +51,56 @@ export class AppComponent {
         return '/' + segments[segments.length - 1];
     }
 
-
-
     cargaPause() {
         setTimeout(() => {
             this.carga.pause();
         }, 200);
     }
+
+    getColorAtPosition = (x: number, y: number, c: any): string => {
+        const imageData = c!.getImageData(x, y, 1, 1).data;
+        const [r, g, b, a] = imageData;
+        return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+    };
+
+    sampleGradientColors(canvas: HTMLCanvasElement) {
+        // Posiciones para tomar muestras: centro y bordes
+        const centerX = canvas!.width / 2;
+        const centerY = canvas!.height / 2;
+        const c = canvas!.getContext('2d');
+        const topLeftColor = this.getColorAtPosition(0, 0, c);
+        const topRightColor = this.getColorAtPosition(canvas!.width - 1, 0, c);
+        const bottomLeftColor = this.getColorAtPosition(0, canvas!.height - 1, c);
+        const bottomRightColor = this.getColorAtPosition(canvas!.width - 1, canvas!.height - 1, c);
+        const centerColor = this.getColorAtPosition(centerX, centerY, c);
+        return {
+            topLeftColor: topLeftColor,
+            topRightColor: topRightColor,
+            bottomLeftColor: bottomLeftColor,
+            bottomRightColor: bottomRightColor,
+            centerColor: centerColor
+        }
+    };
+
     animationStars() {
+
         const n_stars: number = 150;
         const colors: string[] = ['#176ab6', '#fb9b39'];
         for (let i = 0; i < 98; i++) {
             colors.push('#fff');
         }
-        function init(): void {
-            for (let i = 0; i < n_stars; i++) {
-                stars.push(new Star());
-            }
-        }
+
         const canvas: HTMLCanvasElement | null = document.querySelector('canvas');
+        this.canvasStars = canvas;
         canvas!.style.background = '#000';
         const c = canvas!.getContext('2d');
+
+
+        // Debes llamar a esta función después de que el gradiente se haya dibujado
+
+
         const randomInt = (max: number, min: number): number => Math.floor(Math.random() * (max - min) + min);
+
         class Star {
             x: number;
             y: number;
@@ -108,6 +141,7 @@ export class AppComponent {
                 arrayStars.push(new Star(undefined, canvas!.height + 5));
             }
         }
+
         let stars: Star[] = [];
         if (canvas) {
             canvas.width = window.innerWidth;
@@ -122,23 +156,59 @@ export class AppComponent {
                 }
             });
 
+            const drawBG = (quaternary: string, quinary: string, senary: string) => {
+                const bg = c!.createRadialGradient(canvas!.width / 2, canvas!.height * 3, canvas!.height, canvas!.width / 2, canvas!.height, canvas!.height * 4);
+                bg.addColorStop(0, quaternary);
+                bg.addColorStop(0.4, quinary);
+                bg.addColorStop(0.8, quinary);
+                bg.addColorStop(1, senary);
+                return bg;
+            }
 
             if (c) {
-                const bg = c.createRadialGradient(canvas.width / 2, canvas.height * 3, canvas.height, canvas.width / 2, canvas.height, canvas.height * 4);
-                bg.addColorStop(0, "#32465E");
-                bg.addColorStop(0.4, "#000814");
-                bg.addColorStop(0.8, "#000814");
-                bg.addColorStop(1, "#000");
-                let stars: Star[] = [];
+                let currentColor = { quaternary: this.color.quaternary, quinary: this.color.quinary, senary: this.color.senary };
+                let targetColor = { quaternary: this.color.quaternary, quinary: this.color.quinary, senary: this.color.senary };
+                let transitionProgress = 0;
 
-                function init(): void {
-                    for (let i = 0; i < n_stars; i++) {
-                        stars.push(new Star());
-                    }
-                }
+                const interpolateColor = (startColor: string, endColor: string, factor: number) => {
+                    const start = parseInt(startColor.slice(1), 16);
+                    const end = parseInt(endColor.slice(1), 16);
 
-                function animate(): void {
+                    const rStart = (start >> 16) & 255;
+                    const gStart = (start >> 8) & 255;
+                    const bStart = start & 255;
+
+                    const rEnd = (end >> 16) & 255;
+                    const gEnd = (end >> 8) & 255;
+                    const bEnd = end & 255;
+
+                    const r = Math.round(rStart + (rEnd - rStart) * factor);
+                    const g = Math.round(gStart + (gEnd - gStart) * factor);
+                    const b = Math.round(bStart + (bEnd - bStart) * factor);
+
+                    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
+                };
+
+                const animate = (): void => {
                     requestAnimationFrame(animate);
+
+                    if (this.color.changeSW) {
+
+                        this.color.changeSW = false;
+                        targetColor = { quaternary: this.color.quaternary, quinary: this.color.quinary, senary: this.color.senary };
+                        transitionProgress = 0;
+                    }
+
+                    transitionProgress = Math.min(transitionProgress + 0.01, 1);
+
+                    currentColor.quaternary = interpolateColor(currentColor.quaternary, targetColor.quaternary, transitionProgress);
+                    currentColor.quinary = interpolateColor(currentColor.quinary, targetColor.quinary, transitionProgress);
+                    currentColor.senary = interpolateColor(currentColor.senary, targetColor.senary, transitionProgress);
+                    this.color.quaternary = currentColor.quaternary;
+                    this.color.quinary = currentColor.quinary;
+                    this.color.senary = currentColor.senary;
+                    const bg = drawBG(currentColor.quaternary, currentColor.quinary, currentColor.senary);
+
                     c!.clearRect(0, 0, canvas!.width, canvas!.height);
                     c!.fillStyle = bg;
                     c!.fillRect(0, 0, canvas!.width, canvas!.height);
@@ -150,7 +220,13 @@ export class AppComponent {
             }
         }
 
+        function init(): void {
+            for (let i = 0; i < n_stars; i++) {
+                stars.push(new Star());
+            }
+        }
     }
+
     animationSuares() {
         const ww: number = $(window).width() as number;
         const wh: number = $(window).height() as number;
@@ -176,12 +252,13 @@ export class AppComponent {
             draw();
         }
 
-        function draw(): void {
+        const draw = (): void => {
             // Setup canvas environment
             const time: number = new Date().getTime() * 0.002;
-            const color1: string = "rgba(8,18,32,0.3)";
-            const color2: string = "rgba(12, 23, 38,0.4)";
-            const color3: string = "rgba(24, 38, 55,0.4)";
+            const colors = this.sampleGradientColors(this.canvasStars!);
+            const color1: string = 'rgba(3, 12, 25,0.3)';
+            const color2: string = 'rgba(11, 22, 37,0.3)';
+            const color3: string = 'rgba(22, 35, 53,0.3)';
             const canvas = document.getElementById("hero-canvas") as HTMLCanvasElement;
             const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
@@ -298,27 +375,14 @@ export class AppComponent {
             // Triangle group 2 ===========================================
             // Triangle 2.1
             ctx.beginPath();
-            ctx.moveTo(rectX + (canvas.width - 300), rectY + 60);
-            ctx.lineTo(rectX + (canvas.width - 250), rectY + 150);
-            ctx.lineTo(rectX + (canvas.width - 550), rectY + 100);
+            ctx.moveTo(rectX + (canvas.width - 285), rectY + 60);
+            ctx.lineTo(rectX + (canvas.width - 250), rectY + 140);
+            ctx.lineTo(rectX + (canvas.width - 500), rectY + 75);
             ctx.fillStyle = triangle_gradient;
             ctx.fill();
 
-            // Triangle 2.2
-            ctx.beginPath();
-            ctx.moveTo(rectX3 + (canvas.width - 270), rectY + 165);
-            ctx.lineTo(rectX3 + (canvas.width - 300), rectY3 + 270);
-            ctx.lineTo(rectX3 + (canvas.width - 230), rectY3 + 230);
-            ctx.fillStyle = triangle_gradient;
-            ctx.fill();
 
-            // Triangle 2.3
-            ctx.beginPath();
-            ctx.moveTo(rectX2 + (canvas.width - 550), rectY + 120);
-            ctx.lineTo(rectX2 + (canvas.width - 310), rectY2 + 160);
-            ctx.lineTo(rectX2 + (canvas.width - 350), rectY2 + 270);
-            ctx.fillStyle = triangle_gradient;
-            ctx.fill();
+
 
             // // Triangle group 3 ===========================================
             // // Triangle 3.1
@@ -397,5 +461,9 @@ export class AppComponent {
         });
         this.animationStars();
         this.animationSuares();
+        setTimeout(() => {
+            // this.color.changeColor('skyblue', undefined, undefined, '#49c111');
+
+        }, 1000);
     }
 }

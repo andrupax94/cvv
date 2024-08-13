@@ -11,6 +11,8 @@ export class FactoryService {
     public getRandomArbitrary = function (min: any, max: any) {
         return Math.random() * (max - min) + min;
     }
+
+
     public buscarPais(cadena: string, paises: { name: string, nameESP: string, nameALT?: string, country: string, code: string }[], abbr = true): string {
         // Normalizar la cadena eliminando acentos y convirtiéndola a minúsculas
         const cadenaNormalizada = cadena.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
