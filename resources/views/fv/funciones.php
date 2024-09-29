@@ -5,7 +5,7 @@ use App\Models\tipo;
 class misFunciones
 {
     /**
-     * Esta función elimina cualquier extensión de archivo (como .jpg o .png) al final de una URL.
+     * Esta fución elimina cualquier extensión de archivo (como .jpg o .png) al final de una URL.
      * Devuelve la URL limpia sin la extensión.
      */
     public static function limpiarURL($url)
