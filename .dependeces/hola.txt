@@ -14,6 +14,6 @@ git commit -m "Eliminar caché de archivos según .gitignore"
 git push
 git remote remove origin
 ssh-keygen -t rsa -b 4096 -C "<tu_email>"
-
+git clone --recurse-submodules https://github.com/andrupax94/cvv.git
 git submodule add https://github.com/andrupax94/angularModRep.git src/modRep
 git submodule add https://github.com/andrupax94/laravelModRep.git resources/views/modRep
