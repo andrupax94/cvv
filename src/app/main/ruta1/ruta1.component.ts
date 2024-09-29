@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CargaService } from 'src/factory/carga.service';
+import { CargaService } from 'src/modRep/factory/carga.service';
 
 @Component({
     selector: 'app-ruta1',

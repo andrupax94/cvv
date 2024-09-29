@@ -8,11 +8,11 @@ import { APP_BASE_HREF } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LogInComponent } from './log-in/log-in.component';
-import { PopUpsModule } from 'src/pop-ups/pop-ups.module';
+import { PopUpsModule } from 'src/modRep/pop-ups/pop-ups.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from 'src/app/httpInterceptor';
 import { MainComponent } from './main/main.component';
-import { DirectivesModule } from 'src/directives/directives.module';
+import { DirectivesModule } from 'src/modRep/directives/directives.module';
 import { FilterComponent } from './filter/filter.component';
 
 import * as $from from 'jquery';

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { SessionService } from '../factory/session.service';
-import { CargaService } from 'src/factory/carga.service';
+import { SessionService } from '../modRep/factory/session.service';
+import { CargaService } from 'src/modRep/factory/carga.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { authGuard } from '../guards/auth.guard';
+import { authGuard } from '../modRep/guards/auth.guard';
 import { filter } from 'rxjs/operators';
-import { ChangeColorService } from '../factory/change-color.service';
-import { FactoryService } from '../factory/factory.module';
+import { ChangeColorService } from '../modRep/factory/change-color.service';
+import { FactoryService } from '../modRep/factory/factory.module';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',

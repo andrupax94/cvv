@@ -2,9 +2,9 @@ import { FilterService } from './filter.service';
 import { Component, Renderer2 } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CargaService } from 'src/factory/carga.service';
-import { ChangeColorService } from 'src/factory/change-color.service';
-import { ModalesService } from 'src/factory/modales.service';
+import { CargaService } from 'src/modRep/factory/carga.service';
+import { ChangeColorService } from 'src/modRep/factory/change-color.service';
+import { ModalesService } from 'src/modRep/factory/modales.service';
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html',

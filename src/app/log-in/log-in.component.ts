@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MensajesService } from 'src/factory/mensajes.service';
+import { MensajesService } from 'src/modRep/factory/mensajes.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CargaService } from 'src/factory/carga.service';
+import { CargaService } from 'src/modRep/factory/carga.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { SessionService } from 'src/factory/session.service';
+import { SessionService } from 'src/modRep/factory/session.service';
 
 @Component({
     selector: 'app-log-in',

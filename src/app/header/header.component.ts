@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FilterService } from '../filter/filter.service';
-import { SessionService } from 'src/factory/session.service';
-import { CargaService } from 'src/factory/carga.service';
+import { SessionService } from 'src/modRep/factory/session.service';
+import { CargaService } from 'src/modRep/factory/carga.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({

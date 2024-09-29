@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CargaService } from 'src/factory/carga.service';
-import { MensajesService } from 'src/factory/mensajes.service';
-import { ModalesService } from 'src/factory/modales.service';
+import { CargaService } from 'src/modRep/factory/carga.service';
+import { MensajesService } from 'src/modRep/factory/mensajes.service';
+import { ModalesService } from 'src/modRep/factory/modales.service';
 
 @Component({
     selector: 'app-main',

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MensajesService } from '../factory/mensajes.service';
-import { CargaService } from '../factory/carga.service';
+import { MensajesService } from '../modRep/factory/mensajes.service';
+import { CargaService } from '../modRep/factory/carga.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
