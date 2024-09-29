@@ -1,6 +1,6 @@
 [submodule "src/modRep"]
 	path = src/modRep
 	url = https://github.com/andrupax94/angularModRep.git
-[submodule "resources/modRep"]
+[submodule "resources/views/modRep"]
 	path = resources/modRep
 	url = https://github.com/andrupax94/laravelModRep.git

@@ -5,13 +5,12 @@ use App\Models\tipo;
 class misFunciones
 {
     /**
-     * Esta fución elimina cualquier extensión de archivo (como .jpg o .png) al final de una URL.
+     * Esta función elimina cualquier extensión de archivo (como .jpg o .png) al final de una URL.
      * Devuelve la URL limpia sin la extensión.
      */
     public static function limpiarURL($url)
     {
         $url_limpia = preg_replace('/\.(jpg|png).*$/i', '.$1', $url);
-
         return $url_limpia;
     }
 
@@ -26,7 +25,6 @@ class misFunciones
         }
 
         $keys = array_keys($array);
-
         return array_keys($keys) === $keys;
     }
 
